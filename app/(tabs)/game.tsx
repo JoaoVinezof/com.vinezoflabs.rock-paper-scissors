@@ -3,19 +3,17 @@ import { StyleSheet } from 'react-native';
 import Button from '@/components/Button';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { Link } from 'expo-router';
 
 export default function HomeScreen() {
   return (
     <ThemedView style={styles.container}>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Rock, Paper, Scissors</ThemedText>
-        <ThemedText type="subtitle">Select game mode</ThemedText>
+        <ThemedText type="subtitle">Choose your move</ThemedText>
       </ThemedView>
       <ThemedView style={styles.section}>
-        <Link href="/game" asChild>
-          <Button title="Offline mode" onPress={() => {}} />
-        </Link>
+        <Button title="✊ Rock" onPress={() => {}} />
+        <Button title="👋 Paper" onPress={() => {}} />
+        <Button title="✌️ Scissor" onPress={() => {}} />
       </ThemedView>
     </ThemedView>
   );
