@@ -4,40 +4,38 @@ import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import Button from '@/components/Button';
 
 export default function HomeScreen() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
+    <ThemedView style={styles.container}>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Hello, World!</ThemedText>
-        <HelloWave />
+        <ThemedText type="title">Rock, Paper, Scissors</ThemedText>
+        <ThemedText type="subtitle">Select game mode</ThemedText>
       </ThemedView>
-    </ParallaxScrollView>
+      <ThemedView style={styles.section}>
+        <Button title="Offline mode" onPress={() => {}} />
+      </ThemedView>
+    </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 32,
+    paddingTop: 64
+  },
   titleContainer: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     alignItems: 'center',
     gap: 8,
+    marginBottom: 32,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  section: {
+    flex: 1,
+    alignItems: 'stretch',
+    justifyContent: 'flex-start',
+    gap: 8
   },
 });
