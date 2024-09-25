@@ -5,7 +5,7 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { Players, useGameStore } from "@/hooks/stores/useGameStore";
 import { Link } from "expo-router";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useState } from "react";
 
 export default function GameScreen() {
   const [playerNumber] = useState<Players>("playerOne");
