@@ -6,7 +6,8 @@ import { ThemedView } from "@/components/ThemedView";
 import { Players, useGameStore } from "@/hooks/stores/useGameStore";
 import { useCpu } from "@/hooks/useCpu";
 import { useRootNavigationState, useRouter } from "expo-router";
-import { useEffect, useMemo } from "react";
+import { useEffect, useId, useMemo } from "react";
+import { LastFiveResults } from "@/components/LastFiveResults";
 
 const playerNumber: Players = "playerOne";
 const cpuNumber: Players = "playerTwo";
@@ -14,6 +15,7 @@ const cpuNumber: Players = "playerTwo";
 export default function GameResultScreen() {
   const router = useRouter();
   const rootNavigationState = useRootNavigationState();
+  const uniqueId = useId();
 
   const { getCpuMove } = useCpu();
 
@@ -22,8 +24,9 @@ export default function GameResultScreen() {
   const winner = useGameStore((state) => state.getWinner());
 
   const setPlayerMove = useGameStore((state) => state.setPlayerMove);
-  const newGameAndPushHistory = useGameStore(
-    (state) => state.newGameAndPushHistory
+  const pushGameHistory = useGameStore((state) => state.pushGameHistory);
+  const newGame = useGameStore(
+    (state) => state.newGame
   );
 
   useEffect(() => {
@@ -44,6 +47,17 @@ export default function GameResultScreen() {
     return () => clearTimeout(cpuMoveTimeout);
   }, []);
 
+  useEffect(() => {
+    if (winner && playerMove && cpuMove) {
+      pushGameHistory({
+        id: uniqueId,
+        playerOneMove: playerMove,
+        playerTwoMove: cpuMove,
+        winner,
+      });
+    }
+  }, [winner, playerMove, cpuMove])
+
   const winnerText = useMemo(() => {
     switch (winner) {
       case "draw":
@@ -56,14 +70,7 @@ export default function GameResultScreen() {
   }, [winner]);
 
   const playAgainHandle = () => {
-    if (winner && playerMove && cpuMove) {
-      newGameAndPushHistory({
-        playerOneMove: playerMove,
-        playerTwoMove: cpuMove,
-        winner,
-      });
-    }
-
+    newGame();
     router.push("/game");
   };
 
@@ -85,6 +92,7 @@ export default function GameResultScreen() {
           <Button title="Play again" onPress={() => playAgainHandle()} />
         </ThemedView>
       )}
+      <LastFiveResults />
     </ThemedView>
   );
 }
@@ -107,5 +115,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     gap: 8,
   },
-  confirmSection: {},
+  confirmSection: {
+    marginBottom: 32,
+  },
 });

@@ -6,6 +6,7 @@ export type MoveOptions = BaseMoveOptions | null;
 export type Players = 'playerOne' | 'playerTwo';
 
 export type GameHistory = {
+  id: string;
   playerOneMove: BaseMoveOptions;
   playerTwoMove: BaseMoveOptions;
   winner: Players | 'draw';
@@ -61,9 +62,13 @@ export const useGameStore = create<GameState>()(devtools((set, get) => ({
     }
   },
   pushGameHistory(gameHistory) {
-    set((state) => ({
-      history: [...state.history, gameHistory]
-    }));
+    const history = get().history.find(item => item.id === gameHistory.id);
+
+    if (!history) {
+      set((state) => ({
+        history: [...state.history, gameHistory]
+      }));
+    }
   },
   newGame: () => {
     set(() => ({
