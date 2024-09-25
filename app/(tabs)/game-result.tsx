@@ -61,10 +61,10 @@ export default function GameResultScreen() {
         playerOneMove: playerMove,
         playerTwoMove: cpuMove,
         winner,
-      })
+      });
     }
 
-    router.push('/game');
+    router.push("/game");
   };
 
   return (
@@ -76,12 +76,15 @@ export default function GameResultScreen() {
         )}
       </ThemedView>
       <ThemedView style={styles.section}>
+        {playerMove && <ThemedText>You chose {playerMove}</ThemedText>}
         {cpuMove && <ThemedText>CPU chose {cpuMove}</ThemedText>}
         {winner && <ThemedText>{winnerText}</ThemedText>}
       </ThemedView>
-      <ThemedView style={styles.confirmSection}>
-        <Button title="Play again" onPress={() => playAgainHandle()} />
-      </ThemedView>
+      {winner && (
+        <ThemedView style={styles.confirmSection}>
+          <Button title="Play again" onPress={() => playAgainHandle()} />
+        </ThemedView>
+      )}
     </ThemedView>
   );
 }
