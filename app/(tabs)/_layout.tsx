@@ -23,6 +23,20 @@ export default function TabLayout() {
           href: null
         }}
       />
+      <Tabs.Screen
+        name="game"
+        options={{
+          href: null,
+          unmountOnBlur: true,
+        }}
+      />
+      <Tabs.Screen
+        name="game-result"
+        options={{
+          href: null,
+          unmountOnBlur: true,
+        }}
+      />
     </Tabs>
   );
 }
